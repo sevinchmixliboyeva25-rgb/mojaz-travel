@@ -1,0 +1,58 @@
+MO'JAZ TRAVEL — SAYT FAYLLARI
+==============================
+
+Bu arxivda sizning saytingizning barcha tayyor fayllari bor.
+
+
+1-GitHub-uchun-papkasiz/
+------------------------
+Siz hozir GitHub'da ishlatayotgan variant. Barcha fayllar bir joyda (papkasiz),
+faqat "functions/api/bookings.js" papka ichida.
+
+  GitHub'ga yuklash:
+  1) GitHub -> mojaz-travel -> Add file -> Upload files
+  2) Shu papkadagi BARCHA fayllarni (Ctrl + A) sudrab tashlang -> Commit changes
+  3) functions/api/bookings.js faylini GitHub'da "Add file -> Create new file"
+     orqali yarating (nomiga aynan functions/api/bookings.js deb yozing)
+
+  Cloudflare sozlamasi (Workers & Pages -> mojaz-travel -> Settings -> Build -> Edit):
+     Build command ............ bo'sh
+     Build output directory ... bo'sh  (yoki  /  )
+     Root directory ........... bo'sh
+  -> Save -> Deployments -> Retry deployment
+
+  Eng oson variant (GitHub'siz):
+     dash.cloudflare.com -> Workers & Pages -> Create -> Pages -> Upload assets
+     -> shu papkadagi fayllarni sudrab tashlang -> Deploy.
+     (Bu holatda buyurtmalar bazaga emas, WhatsApp orqali keladi.)
+
+
+2-Cloudflare-toliq-loyiha/
+--------------------------
+Dasturchi uchun asl (papkali) loyiha: public/ (sayt), functions/ (server),
+schema.sql (baza jadvali), README.md (texnik ko'rsatma).
+Kelajakda dasturchi bilan ishlasangiz, unga shu papkani bering.
+
+
+3-Skrinshotlar-va-video/
+------------------------
+Saytning rasmlari va animatsiyalar videosi (animatsiya-namoyish.mp4).
+
+
+MUHIM SOZLAMALAR (Cloudflare)
+-----------------------------
+  D1 baza nomi: mojaz-db  ->  Settings -> Bindings -> D1 -> Variable name: DB
+  Admin paroli: Settings -> Variables and Secrets -> Secret -> ADMIN_TOKEN
+  Admin panel:  https://mojaz-travel.pages.dev/admin.html
+
+
+KONTAKTLAR, TURLAR VA NARXLARNI O'ZGARTIRISH
+--------------------------------------------
+  Hammasi data.js faylida (Notepad bilan ochib tahrirlash mumkin).
+  Telefon, WhatsApp, Telegram, email, manzil — fayl boshidagi "SITE" qismida.
+
+
+Hali qilinadigan ishlar:
+  - Narxlarni to'g'rilash
+  - Qolgan yo'nalishlar uchun rasmlar
+  - "Yakka sayohatchilar", "Oilaviy", "Ulkan sarguzashtlar" to'plami rasmlari

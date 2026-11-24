@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Barcha sayohatlar — Mo'jaz</title>
+  <meta name="description" content="O'zbekiston bo'ylab barcha turlar: yo'nalish, faoliyat, to'plam, davomiylik va narx bo'yicha filtrlang.">
+  <meta name="theme-color" content="#0c3440">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<section class="page-hero">
+  <div class="media" id="heroArt"></div>
+  <div class="container">
+    <div class="crumbs"><a href="index.html" data-i18n="home"></a> / <span id="crumb"></span></div>
+    <h1 id="pageTitle"></h1>
+    <div class="seg" id="typeSeg" style="margin-top:10px">
+      <button data-type="all" data-i18n="t_all"></button>
+      <button data-type="domestic">🇺🇿 <span data-i18n="t_domestic"></span></button>
+      <button data-type="inbound">🌍 <span data-i18n="t_inbound"></span></button>
+    </div>
+  </div>
+</section>
+
+<section class="section tight">
+  <div class="container listing">
+    <aside class="filters" id="filters">
+      <div class="close-filters" style="display:none;justify-content:space-between;align-items:center;margin-bottom:12px"><b data-i18n="filters"></b><button class="icon-btn" id="closeFilters" aria-label="close"></button></div>
+      <h4 data-i18n="nav_dest"></h4><div id="fRegion"></div>
+      <h4 data-i18n="nav_act"></h4><div id="fActivity"></div>
+      <h4 data-i18n="nav_col"></h4><div id="fCollection"></div>
+      <h4 data-i18n="f_duration"></h4><div id="fDuration"></div>
+      <h4 data-i18n="f_diff"></h4><div id="fDiff"></div>
+      <h4 data-i18n="f_price"></h4>
+      <input type="range" id="fPrice" min="50" max="3000" step="50">
+      <div class="range-row"><span id="pMin"></span><b id="pVal"></b></div>
+      <button class="btn btn-ghost btn-sm" id="clearAll" style="margin-top:18px;color:var(--teal)" data-i18n="clear"></button>
+      <button class="btn btn-primary apply" id="applyFilters" style="display:none" data-i18n="show_results"></button>
+    </aside>
+    <div>
+      <div class="toolbar">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.6-4.6"/></svg>
+          <input class="input" id="q" type="search" data-i18n-ph="search_ph">
+        </div>
+        <button class="btn btn-ghost btn-sm filter-btn" id="openFilters" style="color:var(--teal)">⚙ <span data-i18n="filters"></span></button>
+        <select class="input" id="sort" style="width:auto">
+          <option value="pop" data-i18n="sort_pop"></option>
+          <option value="low" data-i18n="sort_low"></option>
+          <option value="high" data-i18n="sort_high"></option>
+          <option value="short" data-i18n="sort_short"></option>
+          <option value="rating" data-i18n="sort_rating"></option>
+        </select>
+      </div>
+      <div class="active-filters" id="activeFilters"></div>
+      <p id="count" style="color:var(--muted);margin:0 0 16px"></p>
+      <div class="grid-tours" id="grid"></div>
+    </div>
+  </div>
+</section>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/art.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/tours.js"></script>
+</body>
+</html>

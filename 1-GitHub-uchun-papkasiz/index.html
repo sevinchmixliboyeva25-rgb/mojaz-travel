@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mo'jaz — O'zbekiston bo'ylab sarguzasht sayohatlari</title>
+  <meta name="description" content="Ichki va kirish turizmi: Samarqand, Buxoro, Xiva, tog'lar va cho'l bo'ylab tajribali gidlar bilan kichik guruh sayohatlari. Onlayn band qilish.">
+  <meta property="og:title" content="Mo'jaz — Welcome to Uzbekistan!">
+  <meta property="og:description" content="Solo-friendly, expert-led adventures across Uzbekistan. Book online.">
+  <meta property="og:image" content="https://i.ytimg.com/vi/y-46aImm6uA/maxresdefault.jpg">
+  <meta name="theme-color" content="#0c3440">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ HERO (video) ============ -->
+<section class="hero" id="top">
+  <div class="hero-video" id="heroVideo"></div>
+  <div class="video-ctrl">
+    <button id="vidPlay" aria-label="Pause"></button>
+    <button id="vidSound" aria-label="Sound"></button>
+  </div>
+  <div class="hero-content">
+    <a class="trust intro d1" href="#reviews"><u data-i18n="excellent">A'lo</u> <span class="stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span> <span id="trustTxt"></span></a>
+    <h1><span class="w" data-i18n="hero_title_1"></span> <span class="w swoosh"><span data-i18n="hero_title_2"></span><svg viewBox="0 0 300 30" preserveAspectRatio="none"><path d="M5 22 C 80 4, 200 2, 295 18" stroke="#b7e36b" stroke-width="7" fill="none" stroke-linecap="round"/></svg></span></h1>
+    <p class="hero-sub intro d2" data-i18n="hero_sub"></p>
+    <div class="hero-ctas intro d3">
+      <a class="btn btn-primary btn-lg" href="tours.html" data-i18n="hero_cta"></a>
+      <a class="btn btn-ghost btn-lg" href="#custom" data-i18n="hero_custom"></a>
+    </div>
+  </div>
+  <div class="hero-explore intro d4" id="explore">
+    <div class="container" style="max-width:1440px;padding:0 28px">
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" data-tab="dest" data-i18n="tab_dest"></button>
+        <button class="tab" role="tab" data-tab="act" data-i18n="tab_act"></button>
+        <button class="tab active" role="tab" data-tab="col" data-i18n="tab_col"></button>
+      </div>
+      <div class="carousel" id="heroCarousel">
+        <button class="car-btn prev" aria-label="Prev"></button>
+        <div class="track" id="heroTrack"></div>
+        <button class="car-btn next" aria-label="Next"></button>
+        <div class="dots"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ YUGURUVCHI LENTA ============ -->
+<div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+
+<!-- ============ STATS ============ -->
+<section class="stats pattern-bg">
+  <div class="container grid">
+    <div class="stat"><b data-count="12">0</b><span data-i18n="stat_years"></span></div>
+    <div class="stat"><b data-count="15000" data-suffix="+">0</b><span data-i18n="stat_travellers"></span></div>
+    <div class="stat"><b data-count="4.9" data-suffix="★">0</b><span data-i18n="stat_rating"></span></div>
+    <div class="stat"><b data-count="60" data-suffix="+">0</b><span data-i18n="stat_routes"></span></div>
+  </div>
+</section>
+
+<!-- ============ ICHKI / KIRISH TURIZMI ============ -->
+<section class="section">
+  <div class="container">
+    <div class="center reveal" style="margin-bottom:40px"><div class="kicker" data-i18n="types_kicker"></div><h2 class="h2" data-i18n="types_title"></h2></div>
+    <div class="types">
+      <a class="type-card reveal from-left" href="tours.html?type=domestic">
+        <div class="media" id="artDomestic"></div>
+        <div class="body"><span class="tag">🇺🇿 UZ</span><h3 data-i18n="dom_title"></h3><p data-i18n="dom_text"></p>
+          <ul id="domTags"></ul><span class="btn btn-white" data-i18n="dom_cta"></span></div>
+      </a>
+      <a class="type-card reveal from-right" href="tours.html?type=inbound">
+        <div class="media" id="artInbound"></div>
+        <div class="body"><span class="tag">🌍 EN · RU · DE · FR · JP</span><h3 data-i18n="inb_title"></h3><p data-i18n="inb_text"></p>
+          <ul id="inbTags"></ul><span class="btn btn-primary" data-i18n="inb_cta"></span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRENDDAGI ICHKI TURLAR ============ -->
+<section class="section white" id="trending">
+  <div class="container">
+    <div class="center reveal" style="margin-bottom:48px"><div class="kicker" data-i18n="trend_kicker"></div><h2 class="h2" data-i18n="trend_title"></h2><p style="color:var(--muted);max-width:620px;margin:0 auto" data-i18n="trend_sub"></p></div>
+    <div class="trend-list" id="trendList"></div>
+  </div>
+</section>
+
+<!-- ============ BIR KUNLIK QOCHISH ============ -->
+<section class="escape pattern-bg">
+  <div class="container escape-inner">
+    <div class="reveal from-left">
+      <div class="kicker" data-i18n="escape_kicker"></div>
+      <h2 class="h2" data-i18n="escape_title"></h2>
+      <p data-i18n="escape_text"></p>
+      <div class="escape-timeline"><span>🕖 Jum 19:00</span><i></i><span>🏔 Sha · Yak</span><i></i><span>🏠 Yak 21:00</span></div>
+    </div>
+    <div class="escape-list reveal from-right" id="escapeList"></div>
+  </div>
+</section>
+
+<!-- ============ ENG KO'P SOTILGANLAR ============ -->
+<section class="section white">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div><div class="kicker" data-i18n="feat_kicker"></div><h2 class="h2" data-i18n="feat_title"></h2></div>
+      <div class="seg" id="featSeg">
+        <button class="active" data-type="all" data-i18n="t_all"></button>
+        <button data-type="domestic" data-i18n="t_domestic"></button>
+        <button data-type="inbound" data-i18n="t_inbound"></button>
+      </div>
+    </div>
+    <div class="grid-tours" id="featGrid"></div>
+    <div class="center" style="margin-top:36px"><a class="btn btn-teal btn-lg" href="tours.html" data-i18n="see_all"></a></div>
+  </div>
+</section>
+
+<!-- ============ AKSIYALAR ============ -->
+<section class="section" id="deals">
+  <div class="container">
+    <div class="deals reveal zoom">
+      <div>
+        <div class="kicker" style="color:#fff" data-i18n="deals_kicker"></div>
+        <h2 data-i18n="deals_title"></h2>
+        <div class="countdown" id="countdown"></div>
+        <p data-i18n="deals_text"></p>
+        <a class="btn btn-white" href="tours.html?deals=1" data-i18n="see_all"></a>
+      </div>
+      <div class="deal-list" id="dealList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEGA BIZ ============ -->
+<section class="section sand2" id="why">
+  <div class="container">
+    <div class="center reveal" style="margin-bottom:44px"><div class="kicker" data-i18n="why_kicker"></div><h2 class="h2" data-i18n="why_title"></h2></div>
+    <div class="why-grid">
+      <div class="why reveal"><div class="ico">🧭</div><h3 data-i18n="why1_t"></h3><p data-i18n="why1_d"></p></div>
+      <div class="why reveal reveal-d1"><div class="ico">👥</div><h3 data-i18n="why2_t"></h3><p data-i18n="why2_d"></p></div>
+      <div class="why reveal reveal-d2"><div class="ico">🎒</div><h3 data-i18n="why3_t"></h3><p data-i18n="why3_d"></p></div>
+      <div class="why reveal"><div class="ico">📅</div><h3 data-i18n="why4_t"></h3><p data-i18n="why4_d"></p></div>
+      <div class="why reveal reveal-d1"><div class="ico">💬</div><h3 data-i18n="why5_t"></h3><p data-i18n="why5_d"></p></div>
+      <div class="why reveal reveal-d2"><div class="ico">🛂</div><h3 data-i18n="why6_t"></h3><p data-i18n="why6_d"></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QANDAY ISHLAYDI ============ -->
+<section class="section dark pattern-bg">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:44px"><div class="kicker" data-i18n="how_kicker"></div><h2 class="h2" data-i18n="how_title"></h2></div>
+    <div class="steps">
+      <div class="step reveal"><h3 data-i18n="how1_t"></h3><p data-i18n="how1_d"></p></div>
+      <div class="step reveal reveal-d1"><h3 data-i18n="how2_t"></h3><p data-i18n="how2_d"></p></div>
+      <div class="step reveal reveal-d2"><h3 data-i18n="how3_t"></h3><p data-i18n="how3_d"></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SANALAR VA NARXLAR ============ -->
+<section class="section" id="departures">
+  <div class="container">
+    <div class="sec-head reveal"><div><div class="kicker" data-i18n="dep_kicker"></div><h2 class="h2" data-i18n="dep_title"></h2></div></div>
+    <div class="dep-filter" id="depFilter"></div>
+    <table class="dep-table">
+      <thead><tr><th data-i18n="th_tour"></th><th data-i18n="th_dates"></th><th data-i18n="th_status"></th><th data-i18n="th_price"></th><th></th></tr></thead>
+      <tbody id="depBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ SHARHLAR ============ -->
+<section class="section white" id="reviews">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div><div class="kicker" data-i18n="rev_kicker"></div><h2 class="h2" data-i18n="rev_title"></h2></div>
+      <div class="rsummary"><span class="big">4.9</span><span><span class="stars"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span><br><small id="revCount"></small></span></div>
+    </div>
+    <div class="carousel light" id="revCarousel">
+      <button class="car-btn prev" aria-label="Prev"></button>
+      <div class="track" id="revTrack"></div>
+      <button class="car-btn next" aria-label="Next"></button>
+      <div class="dots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ILHOM ============ -->
+<section class="section" id="inspiration">
+  <div class="container">
+    <div class="sec-head reveal"><div><div class="kicker" data-i18n="insp_kicker"></div><h2 class="h2" data-i18n="insp_title"></h2></div></div>
+    <div class="posts" id="posts"></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section sand2" id="faq">
+  <div class="container">
+    <div class="center reveal" style="margin-bottom:36px"><div class="kicker" data-i18n="faq_kicker"></div><h2 class="h2" data-i18n="faq_title"></h2></div>
+    <div class="faq" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ============ SHAXSIY TUR ============ -->
+<section class="section dark pattern-bg" id="custom">
+  <div class="container custom">
+    <div class="reveal">
+      <div class="kicker" data-i18n="custom_kicker"></div>
+      <h2 class="h2" data-i18n="custom_title"></h2>
+      <p class="lead" data-i18n="custom_text"></p>
+      <ul class="contact-list" id="contactList"></ul>
+    </div>
+    <div class="custom-card reveal reveal-d1">
+      <form id="customForm" class="form-grid">
+        <div class="field"><label><span data-i18n="f_name"></span> <span class="req">*</span></label><input name="name" required></div>
+        <div class="field"><label><span data-i18n="f_phone"></span> <span class="req">*</span></label><input name="phone" type="tel" required></div>
+        <div class="field"><label data-i18n="f_email"></label><input name="email" type="email"></div>
+        <div class="field"><label data-i18n="f_country"></label><input name="country"></div>
+        <div class="field"><label data-i18n="f_dates"></label><input name="dates" placeholder="05.2027"></div>
+        <div class="field"><label data-i18n="f_people"></label><input name="people" type="number" min="1" value="2"></div>
+        <div class="field full"><label data-i18n="f_message"></label><textarea name="message"></textarea></div>
+        <div class="full"><button class="btn btn-primary btn-block btn-lg" type="submit" data-i18n="f_send"></button><div class="form-ok"></div></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OBUNA ============ -->
+<section class="newsletter">
+  <div class="container">
+    <h3 data-i18n="news_title"></h3>
+    <div style="flex:1;max-width:480px">
+      <form class="news-form" id="newsForm"><input type="email" name="email" required data-i18n-ph="news_ph"><button class="btn btn-primary" type="submit" data-i18n="news_btn"></button></form>
+      <div class="form-ok"></div>
+    </div>
+  </div>
+</section>
+
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script src="art.js"></script>
+<script src="app.js"></script>
+<script src="home.js"></script>
+</body>
+</html>

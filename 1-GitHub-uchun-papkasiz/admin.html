@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin — Mo'jaz</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="section" style="padding-top:110px">
+  <div class="container">
+    <div class="sec-head">
+      <div><div class="kicker">Admin</div><h1 class="h2">Buyurtmalar paneli</h1></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <input class="input" id="token" type="password" placeholder="ADMIN_TOKEN" style="width:220px">
+        <button class="btn btn-teal" id="load">Yuklash</button>
+        <button class="btn btn-ghost" id="csv" style="color:var(--teal)">CSV eksport</button>
+      </div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div class="seg" id="kindSeg" style="margin-bottom:16px">
+      <button class="active" data-k="booking">Buyurtmalar</button>
+      <button data-k="custom">Shaxsiy tur so'rovlari</button>
+      <button data-k="newsletter">Obunachilar</button>
+    </div>
+    <p id="msg" style="color:var(--muted)"></p>
+    <div style="overflow-x:auto"><table class="admin-table" id="table"></table></div>
+  </div>
+</main>
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script src="art.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  const { $, $$, esc } = App;
+  App.renderHeader();
+  const STATUSES = { new: "🆕 Yangi", contacted: "📞 Bog'lanildi", paid: "💳 To'landi", confirmed: "✅ Tasdiqlandi", cancelled: "✕ Bekor" };
+  let rows = [], kind = "booking";
+  try { $("#token").value = sessionStorage.getItem("sy_admin") || ""; } catch {}
+
+  async function load() {
+    const token = $("#token").value.trim();
+    try { sessionStorage.setItem("sy_admin", token); } catch {}
+    $("#msg").textContent = "Yuklanmoqda...";
+    try {
+      const r = await fetch("/api/bookings?limit=500", { headers: { Authorization: "Bearer " + token } });
+      if (r.status === 401) throw new Error("Token noto'g'ri");
+      if (!r.ok) throw new Error("Server xatosi: " + r.status);
+      rows = (await r.json()).results || [];
+      $("#msg").textContent = "";
+    } catch (e) {
+      // Server ishlamasa — shu brauzerda saqlangan (offline) so'rovlar
+      rows = App.LS.get("sy_outbox", []).map((x, i) => ({ id: "local-" + i, status: "new", ...x }));
+      $("#msg").textContent = "⚠ " + e.message + ". Faqat shu brauzerdagi offline so'rovlar ko'rsatilmoqda.";
+    }
+    render();
+  }
+
+  function render() {
+    const b = rows.filter(r => r.kind === "booking");
+    const revenue = b.filter(r => ["paid", "confirmed"].includes(r.status)).reduce((s, r) => s + (+r.total_usd || 0), 0);
+    $("#kpis").innerHTML = [
+      [b.length, "Jami buyurtmalar"], [b.filter(r => r.status === "new").length, "Yangi (javobsiz)"],
+      ["$" + revenue.toLocaleString("en-US"), "Tasdiqlangan tushum"], [rows.filter(r => r.kind === "newsletter").length, "Obunachilar"]
+    ].map(([v, l]) => `<div class="kpi"><b>${v}</b><small>${l}</small></div>`).join("");
+    const list = rows.filter(r => r.kind === kind);
+    const head = kind === "booking"
+      ? ["Kod", "Sana", "Tur", "Jo'nash", "Kishi", "Jami / hozir", "To'lov", "Mijoz", "Aloqa", "Holat"]
+      : kind === "custom" ? ["Sana", "Ism", "Aloqa", "Ma'lumot", "Holat"] : ["Sana", "Email"];
+    $("#table").innerHTML = `<thead><tr>${head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${list.map(r => {
+      const d = (r.created_at || "").replace("T", " ").slice(0, 16);
+      const st = `<select data-id="${r.id}">${Object.entries(STATUSES).map(([k, v]) => `<option value="${k}" ${r.status === k ? "selected" : ""}>${v}</option>`).join("")}</select>`;
+      if (kind === "booking") return `<tr><td><b>${esc(r.code)}</b></td><td>${d}</td><td>${esc(r.tour_title)}</td><td>${esc(r.departure)}</td><td>${r.adults || 0}+${r.children || 0}</td>
+        <td>$${r.total_usd ?? "-"} / $${r.due_now_usd ?? 0}</td><td>${esc(r.pay_option)} · ${esc(r.pay_channel)}</td><td>${esc(r.name)}<br><small>${esc(r.country || "")}</small></td>
+        <td>${esc(r.phone)}<br><small>${esc(r.email || "")}</small></td><td>${st}</td></tr>`;
+      if (kind === "custom") { const p = (() => { try { return JSON.parse(r.payload || "{}"); } catch { return r; } })();
+        return `<tr><td>${d}</td><td>${esc(r.name)}</td><td>${esc(r.phone)}<br><small>${esc(r.email || "")}</small></td><td><small>${esc([p.dates, p.people && p.people + " kishi", r.country].filter(Boolean).join(" · "))}</small><br>${esc(r.notes || "")}</td><td>${st}</td></tr>`; }
+      return `<tr><td>${d}</td><td>${esc(r.email)}</td></tr>`;
+    }).join("") || `<tr><td colspan="${head.length}" style="text-align:center;color:var(--muted);padding:30px">Hozircha yozuv yo'q</td></tr>`}</tbody>`;
+    $$("#table select").forEach(s => s.onchange = async () => {
+      const r = await fetch("/api/bookings", { method: "PATCH", headers: { "Content-Type": "application/json", Authorization: "Bearer " + $("#token").value.trim() }, body: JSON.stringify({ id: +s.dataset.id, status: s.value }) }).catch(() => null);
+      const row = rows.find(x => String(x.id) === s.dataset.id); if (row) row.status = s.value;
+      s.style.outline = r && r.ok ? "2px solid var(--green)" : "2px solid var(--red)"; render();
+    });
+  }
+
+  $("#load").onclick = load;
+  $("#token").onkeydown = e => e.key === "Enter" && load();
+  $$("#kindSeg button").forEach(b => b.onclick = () => { kind = b.dataset.k; $$("#kindSeg button").forEach(x => x.classList.toggle("active", x === b)); render(); });
+  $("#csv").onclick = () => {
+    const list = rows.filter(r => r.kind === kind); if (!list.length) return;
+    const cols = ["code", "created_at", "status", "tour_title", "departure", "adults", "children", "total_usd", "due_now_usd", "pay_option", "pay_channel", "name", "phone", "email", "country", "notes"];
+    const csv = "﻿" + [cols.join(",")].concat(list.map(r => cols.map(c => `"${String(r[c] ?? "").replace(/"/g, '""')}"`).join(","))).join("\n");
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = `sayyoh-${kind}-${new Date().toISOString().slice(0, 10)}.csv`; a.click();
+  };
+  if ($("#token").value) load(); else render();
+})();
+</script>
+</body>
+</html>
