@@ -9,7 +9,7 @@ window.SITE = {
   phone: "+998 91 810 05 35",
   whatsapp: "998918100535",
   telegram: "mujaz_",          // t.me/<username>
-  email: "gulsevarmamatkarimova11@gmail.com",
+  email: "sevinchmixliboyeva25@gmail.com",
   address: { uz: "Jizzax sh., Jizzaxlik MFY, Ulug'bek ko'chasi", en: "Ulugbek St, Jizzakhlik mahalla, Jizzakh, Uzbekistan", ru: "г. Джизак, махалля Джизаклик, ул. Улугбека" },
   license: "Litsenziya № T-0000 (O'zbekiston Turizm qo'mitasi)",
   rating: 4.9, reviewsCount: 1240,
