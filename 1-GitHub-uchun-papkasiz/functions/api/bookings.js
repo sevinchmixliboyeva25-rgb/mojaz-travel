@@ -56,7 +56,8 @@ async function notifyTelegram(env, r) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ chat_id: id, text: lines.join("\n"), parse_mode: "HTML" })
-    }).catch(() => {})));
+    }).then(async res => { if (!res.ok) console.log("Telegram xato:", id, res.status, await res.text()); })
+      .catch(e => console.log("Telegram tarmoq xatosi:", id, e && e.message))));
   } catch (e) { /* xabar yuborilmasa ham buyurtma saqlanadi */ }
 }
 
