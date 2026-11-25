@@ -9,7 +9,7 @@
  *   DB                  — D1 database (schema.sql)
  *   ADMIN_TOKEN         — secret, admin panel uchun parol
  *   TELEGRAM_BOT_TOKEN  — secret (ixtiyoriy), yangi buyurtma haqida xabar
- *   TELEGRAM_CHAT_ID    — o'zgaruvchi (ixtiyoriy), menejerlar chati ID si
+ *   TELEGRAM_CHAT_ID    — o'zgaruvchi (ixtiyoriy), menejerlar chati ID si (bir nechta bo'lsa vergul bilan: 111,222)
  */
 
 const json = (data, status = 200) =>
@@ -50,11 +50,13 @@ async function notifyTelegram(env, r) {
     r.notes && `📝 ${e(r.notes)}`
   ].filter(Boolean);
   try {
-    await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    // TELEGRAM_CHAT_ID da bir nechta ID ni vergul bilan yozish mumkin: "111,222,-100333"
+    const ids = String(env.TELEGRAM_CHAT_ID).split(",").map(s => s.trim()).filter(Boolean);
+    await Promise.all(ids.map(id => fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, text: lines.join("\n"), parse_mode: "HTML" })
-    });
+      body: JSON.stringify({ chat_id: id, text: lines.join("\n"), parse_mode: "HTML" })
+    }).catch(() => {})));
   } catch (e) { /* xabar yuborilmasa ham buyurtma saqlanadi */ }
 }
 
