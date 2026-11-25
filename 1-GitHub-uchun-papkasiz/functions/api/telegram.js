@@ -131,7 +131,8 @@ export async function onRequestPost({ request, env }) {
     }
   } catch (e) {
     console.log("telegram webhook xato:", e && e.message);
-    try { await send(env, chatId, "⚠️ Xatolik yuz berdi. Keyinroq urinib ko'ring."); } catch {}
+    // Bu joyga faqat ruxsatli adminlar yetib keladi, shuning uchun xato sababini ko'rsatamiz
+    try { await send(env, chatId, `⚠️ Xatolik yuz berdi:\n<code>${esc(e && e.message ? e.message : e)}</code>`); } catch {}
   }
   return new Response("ok");
 }
